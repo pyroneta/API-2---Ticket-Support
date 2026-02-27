@@ -1,5 +1,6 @@
 package Server;
 
+import Handler.RegistrarHandler;
 import Handler.RootHandler;
 import Handler.UpstreamHealthHandler;
 import com.sun.net.httpserver.Headers;
@@ -22,6 +23,9 @@ public class TicketServer {
             // Root opcional
             server.createContext("/", new RootHandler());
 
+            // Registrar backends
+            server.createContext("/registrar", new RegistrarHandler());
+
             // Tickets
             server.createContext("/tickets", exchange -> {
 
@@ -39,7 +43,6 @@ public class TicketServer {
                 new TicketHandler().handle(exchange);
             });
 
-            // ✅ AQUI VA EL HEALTH
             server.createContext("/health", new UpstreamHealthHandler());
 
             server.setExecutor(Executors.newFixedThreadPool(4));

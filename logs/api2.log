@@ -1,137 +1,12 @@
-2026-02-19 16:46:12.760 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request POST /tickets
-2026-02-19 16:46:13.385 INFO  [pool-1-thread-1] Proxy.TicketProxy - [3ab265d0] LB -> POST http://localhost:1914/tickets connectTimeout=10000ms readTimeout=200ms bodySize=107 bodyPreview={"id":0,"titulo":"Test debug","descripcion":"Probando insercion","usuarioId":1,"empleadoId":1,"estadoId":1}
-2026-02-19 16:46:13.601 ERROR [pool-1-thread-1] Proxy.TicketProxy - [3ab265d0] LB -> POST exception http=-1 after 225ms err=java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
-	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:871)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:847)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 16:46:13.606 ERROR [pool-1-thread-1] Handler.TicketHandler - Request failed POST /tickets - java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
-	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:871)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:847)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 16:46:13.676 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed POST /tickets status=500 timeMs=918
-2026-02-19 16:57:56.456 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request POST /tickets
-2026-02-19 16:57:57.092 INFO  [pool-1-thread-1] Proxy.TicketProxy - [f6f0b54a] LB -> POST http://localhost:1914/tickets connectTimeout=10000ms readTimeout=200ms bodySize=107 bodyPreview={"id":0,"titulo":"Test debug","descripcion":"Probando insercion","usuarioId":1,"empleadoId":1,"estadoId":1}
-2026-02-19 16:57:57.303 ERROR [pool-1-thread-1] Proxy.TicketProxy - [f6f0b54a] LB -> POST exception http=-1 after 221ms err=java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
-	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:871)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:847)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 16:57:57.308 ERROR [pool-1-thread-1] Handler.TicketHandler - Request failed POST /tickets - java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
-	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:871)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:847)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 16:57:57.351 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed POST /tickets status=500 timeMs=897
-2026-02-19 16:58:27.086 INFO  [pool-1-thread-2] Handler.TicketHandler - Incoming request POST /tickets
-2026-02-19 16:58:27.170 INFO  [pool-1-thread-2] Proxy.TicketProxy - [5c457a9b] LB -> POST http://localhost:1914/tickets connectTimeout=10000ms readTimeout=200ms bodySize=110 bodyPreview={"id":0,"titulo":"Test ddddebug","descripcion":"Probando insercion","usuarioId":1,"empleadoId":1,"estadoId":2}
-2026-02-19 16:58:27.317 ERROR [pool-1-thread-2] Proxy.TicketProxy - [5c457a9b] LB -> POST failed http=500 timeMs=148 writeMs=0 body=
-2026-02-19 16:58:27.318 ERROR [pool-1-thread-2] Proxy.TicketProxy - [5c457a9b] LB -> POST exception http=500 after 149ms err=java.lang.Exception: API1 POST error HTTP 500 body=
+2026-02-23 17:49:48.111 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request POST /tickets
+2026-02-23 17:49:48.200 INFO  [pool-1-thread-1] Proxy.TicketProxy - [1ef7fcc3] LB -> POST attempt 1/2 http://localhost:1914/tickets connectTimeout=500ms readTimeout=500ms bodySize=107 bodyPreview={"id":0,"titulo":"Test rETRY","descripcion":"Probando insercion","usuarioId":1,"empleadoId":1,"estadoId":2}
+2026-02-23 17:49:48.747 WARN  [pool-1-thread-1] Proxy.TicketProxy - [1ef7fcc3] LB -> POST READ TIMEOUT on attempt 1/2. Retrying internally...
+2026-02-23 17:49:48.871 INFO  [pool-1-thread-1] Proxy.TicketProxy - [1ef7fcc3] LB -> POST attempt 2/2 http://localhost:1914/tickets connectTimeout=500ms readTimeout=4000ms bodySize=107 bodyPreview={"id":0,"titulo":"Test rETRY","descripcion":"Probando insercion","usuarioId":1,"empleadoId":1,"estadoId":2}
+2026-02-23 17:49:50.915 ERROR [pool-1-thread-1] Proxy.TicketProxy - [1ef7fcc3] LB -> POST failed http=500 timeMs=2725 writeMs=1 body=
+2026-02-23 17:49:50.993 ERROR [pool-1-thread-1] Handler.TicketHandler - Request failed POST /tickets - java.lang.Exception: API1 POST error HTTP 500 body=
 java.lang.Exception: API1 POST error HTTP 500 body=
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:117)
+	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:150)
 	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
 	at Handler.TicketHandler.handle(TicketHandler.java:45)
 	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
@@ -143,13 +18,27 @@ java.lang.Exception: API1 POST error HTTP 500 body=
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 16:58:27.318 ERROR [pool-1-thread-2] Handler.TicketHandler - Request failed POST /tickets - java.lang.Exception: API1 POST error HTTP 500 body=
-java.lang.Exception: API1 POST error HTTP 500 body=
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:117)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
+2026-02-23 17:49:50.998 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed POST /tickets status=500 timeMs=2889
+2026-02-23 18:17:55.079 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request POST /tickets
+2026-02-23 18:17:55.141 INFO  [pool-1-thread-1] Proxy.TicketProxy - [e8cb8f54] LB -> POST attempt 1/2 http://localhost:1914/tickets connectTimeout=500ms readTimeout=4000ms bodySize=107
+2026-02-23 18:17:55.142 WARN  [pool-1-thread-1] Proxy.TicketProxy - [e8cb8f54] Simulating READ TIMEOUT on attempt 1
+2026-02-23 18:17:55.143 WARN  [pool-1-thread-1] Proxy.TicketProxy - [e8cb8f54] LB -> POST READ TIMEOUT attempt 1/2. Retrying internally after 250ms...
+2026-02-23 18:17:55.404 INFO  [pool-1-thread-1] Proxy.TicketProxy - [e8cb8f54] LB -> POST attempt 2/2 http://localhost:1914/tickets connectTimeout=500ms readTimeout=4000ms bodySize=107
+2026-02-23 18:17:56.009 INFO  [pool-1-thread-1] Proxy.TicketProxy - [e8cb8f54] LB -> POST success on attempt 2 http=201 timeMs=879 respSize=152
+2026-02-23 18:17:56.052 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed POST /tickets status=201 timeMs=976
+2026-02-23 20:22:35.072 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:22:35.080 INFO  [pool-1-thread-1] Proxy.TicketProxy - [6f40a3e2] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:22:35.560 INFO  [pool-1-thread-1] Proxy.TicketProxy - [6f40a3e2] LB -> GET done http=200 timeMs=481 respSize=3743
+2026-02-23 20:22:35.564 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=493
+2026-02-23 20:23:13.811 INFO  [pool-1-thread-2] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:23:13.812 INFO  [pool-1-thread-2] Proxy.TicketProxy - [ff7f88a3] LB -> GET http://127.0.0.1:1917/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:23:13.831 ERROR [pool-1-thread-2] Proxy.TicketProxy - [ff7f88a3] LB -> GET UPSTREAM CONNECT FAILED after 19ms err=java.net.ConnectException: Connection refused: getsockopt
+2026-02-23 20:23:13.833 ERROR [pool-1-thread-2] Handler.TicketHandler - Request failed GET /tickets - java.lang.Exception: BAD_GATEWAY_CONNECT_TIMEOUT
+java.lang.Exception: BAD_GATEWAY_CONNECT_TIMEOUT
+	at Proxy.TicketProxy.obtenerTickets(TicketProxy.java:91)
+	at Service.TicketService.listarTickets(TicketService.java:29)
+	at Handler.TicketHandler.handle(TicketHandler.java:34)
+	at Server.TicketServer.lambda$start$0(TicketServer.java:43)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
 	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
@@ -159,30 +48,41 @@ java.lang.Exception: API1 POST error HTTP 500 body=
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 16:58:27.320 INFO  [pool-1-thread-2] Handler.TicketHandler - Completed POST /tickets status=500 timeMs=234
-2026-02-19 17:01:59.142 INFO  [pool-1-thread-3] Handler.TicketHandler - Incoming request POST /tickets
-2026-02-19 17:01:59.537 INFO  [pool-1-thread-3] Proxy.TicketProxy - [1e7a4fe2] LB -> POST http://localhost:1914/tickets connectTimeout=10000ms readTimeout=200ms bodySize=110 bodyPreview={"id":0,"titulo":"Test ddddebug","descripcion":"Probando insercion","usuarioId":1,"empleadoId":1,"estadoId":2}
-2026-02-19 17:01:59.751 ERROR [pool-1-thread-3] Proxy.TicketProxy - [1e7a4fe2] LB -> POST exception http=-1 after 216ms err=java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:178)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:531)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:636)
+	at java.base/sun.net.www.http.HttpClient.<init>(HttpClient.java:280)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:386)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:408)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1319)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1252)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1138)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1067)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1690)
 	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
 	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
+	at Proxy.TicketProxy.obtenerTickets(TicketProxy.java:63)
+	... 12 common frames omitted
+2026-02-23 20:23:13.838 INFO  [pool-1-thread-2] Handler.TicketHandler - Completed GET /tickets status=502 timeMs=27
+2026-02-23 20:23:15.825 INFO  [pool-1-thread-3] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:23:15.825 INFO  [pool-1-thread-3] Proxy.TicketProxy - [89e3c141] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:23:15.923 INFO  [pool-1-thread-3] Proxy.TicketProxy - [89e3c141] LB -> GET done http=200 timeMs=98 respSize=3743
+2026-02-23 20:23:15.923 INFO  [pool-1-thread-3] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=98
+2026-02-23 20:23:17.609 INFO  [pool-1-thread-4] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:23:17.609 INFO  [pool-1-thread-4] Proxy.TicketProxy - [dbb0f422] LB -> GET http://127.0.0.1:1917/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:23:17.611 ERROR [pool-1-thread-4] Proxy.TicketProxy - [dbb0f422] LB -> GET UPSTREAM CONNECT FAILED after 2ms err=java.net.ConnectException: Connection refused: getsockopt
+2026-02-23 20:23:17.612 ERROR [pool-1-thread-4] Handler.TicketHandler - Request failed GET /tickets - java.lang.Exception: BAD_GATEWAY_CONNECT_TIMEOUT
+java.lang.Exception: BAD_GATEWAY_CONNECT_TIMEOUT
+	at Proxy.TicketProxy.obtenerTickets(TicketProxy.java:91)
+	at Service.TicketService.listarTickets(TicketService.java:29)
+	at Handler.TicketHandler.handle(TicketHandler.java:34)
+	at Server.TicketServer.lambda$start$0(TicketServer.java:43)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
 	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
 	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
@@ -192,97 +92,70 @@ java.net.SocketTimeoutException: Read timed out
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 17:01:59.752 ERROR [pool-1-thread-3] Handler.TicketHandler - Request failed POST /tickets - java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:178)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:531)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:636)
+	at java.base/sun.net.www.http.HttpClient.<init>(HttpClient.java:280)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:386)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:408)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1319)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1252)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1138)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1067)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1690)
 	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
 	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:871)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:847)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 17:01:59.754 INFO  [pool-1-thread-3] Handler.TicketHandler - Completed POST /tickets status=500 timeMs=612
-2026-02-19 17:04:02.690 INFO  [pool-1-thread-4] Handler.TicketHandler - Incoming request POST /tickets
-2026-02-19 17:04:02.878 INFO  [pool-1-thread-4] Proxy.TicketProxy - [66472d33] LB -> POST http://localhost:1914/tickets connectTimeout=10000ms readTimeout=200ms bodySize=113 bodyPreview={"id":0,"titulo":"Test ddddebug 22","descripcion":"Probando insercion","usuarioId":1,"empleadoId":1,"estadoId":2}
-2026-02-19 17:04:03.090 ERROR [pool-1-thread-4] Proxy.TicketProxy - [66472d33] LB -> POST exception http=-1 after 214ms err=java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
-	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:871)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:847)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 17:04:03.091 ERROR [pool-1-thread-4] Handler.TicketHandler - Request failed POST /tickets - java.net.SocketTimeoutException: Read timed out
-java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
-	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
-	at Proxy.TicketProxy.enviarTicket(TicketProxy.java:109)
-	at Service.TicketService.crearTicket(TicketService.java:26)
-	at Handler.TicketHandler.manejarPost(TicketHandler.java:76)
-	at Handler.TicketHandler.handle(TicketHandler.java:45)
-	at Server.TicketServer.lambda$start$0(TicketServer.java:39)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.AuthFilter.doFilter(AuthFilter.java:82)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:101)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange$LinkHandler.handle(ServerImpl.java:871)
-	at jdk.httpserver/com.sun.net.httpserver.Filter$Chain.doFilter(Filter.java:98)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl$Exchange.run(ServerImpl.java:847)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-02-19 17:04:03.092 INFO  [pool-1-thread-4] Handler.TicketHandler - Completed POST /tickets status=500 timeMs=402
+	at Proxy.TicketProxy.obtenerTickets(TicketProxy.java:63)
+	... 12 common frames omitted
+2026-02-23 20:23:17.613 INFO  [pool-1-thread-4] Handler.TicketHandler - Completed GET /tickets status=502 timeMs=4
+2026-02-23 20:23:18.991 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:23:18.992 INFO  [pool-1-thread-1] Proxy.TicketProxy - [d84b55ce] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:23:19.079 INFO  [pool-1-thread-1] Proxy.TicketProxy - [d84b55ce] LB -> GET done http=200 timeMs=87 respSize=3743
+2026-02-23 20:23:19.080 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=89
+2026-02-23 20:27:58.276 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:27:58.284 INFO  [pool-1-thread-1] Proxy.TicketProxy - [7227af38] LB -> GET http://127.0.0.3:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:27:58.749 INFO  [pool-1-thread-1] Proxy.TicketProxy - [7227af38] LB -> GET done http=200 timeMs=467 respSize=3743
+2026-02-23 20:27:58.749 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=475
+2026-02-23 20:28:00.416 INFO  [pool-1-thread-2] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:28:00.416 INFO  [pool-1-thread-2] Proxy.TicketProxy - [0eb19b17] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:28:00.508 INFO  [pool-1-thread-2] Proxy.TicketProxy - [0eb19b17] LB -> GET done http=200 timeMs=92 respSize=3743
+2026-02-23 20:28:00.510 INFO  [pool-1-thread-2] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=94
+2026-02-23 20:30:02.106 INFO  [pool-1-thread-3] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:30:02.107 INFO  [pool-1-thread-3] Proxy.TicketProxy - [5ba7926d] LB -> GET http://127.0.0.3:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:30:02.206 INFO  [pool-1-thread-3] Proxy.TicketProxy - [5ba7926d] LB -> GET done http=200 timeMs=99 respSize=3743
+2026-02-23 20:30:02.207 INFO  [pool-1-thread-3] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=101
+2026-02-23 20:30:02.326 INFO  [pool-1-thread-4] Handler.RootHandler - Root endpoint hit /favicon.ico
+2026-02-23 20:33:10.926 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:33:10.934 INFO  [pool-1-thread-1] Proxy.TicketProxy - [63663ff4] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:33:11.387 INFO  [pool-1-thread-1] Proxy.TicketProxy - [63663ff4] LB -> GET done http=200 timeMs=455 respSize=3743
+2026-02-23 20:33:11.389 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=465
+2026-02-23 20:33:18.123 INFO  [pool-1-thread-2] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:33:18.125 INFO  [pool-1-thread-2] Proxy.TicketProxy - [becede48] LB -> GET http://127.0.0.1:1916/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:33:18.127 INFO  [pool-1-thread-3] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:33:18.127 INFO  [pool-1-thread-3] Proxy.TicketProxy - [9c0f91fb] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:33:18.217 INFO  [pool-1-thread-3] Proxy.TicketProxy - [9c0f91fb] LB -> GET done http=200 timeMs=90 respSize=3743
+2026-02-23 20:33:18.217 INFO  [pool-1-thread-3] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=90
+2026-02-23 20:33:18.220 INFO  [pool-1-thread-2] Proxy.TicketProxy - [becede48] LB -> GET done http=200 timeMs=95 respSize=3743
+2026-02-23 20:33:18.220 INFO  [pool-1-thread-2] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=97
+2026-02-23 20:33:32.630 INFO  [pool-1-thread-1] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:33:32.632 INFO  [pool-1-thread-1] Proxy.TicketProxy - [2e2ef303] LB -> GET http://127.0.0.1:1916/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:33:32.634 INFO  [pool-1-thread-3] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:33:32.635 INFO  [pool-1-thread-3] Proxy.TicketProxy - [58a5b8f7] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:33:32.722 INFO  [pool-1-thread-3] Proxy.TicketProxy - [58a5b8f7] LB -> GET done http=200 timeMs=87 respSize=3743
+2026-02-23 20:33:32.725 INFO  [pool-1-thread-3] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=91
+2026-02-23 20:33:32.725 INFO  [pool-1-thread-1] Proxy.TicketProxy - [2e2ef303] LB -> GET done http=200 timeMs=93 respSize=3743
+2026-02-23 20:33:32.726 INFO  [pool-1-thread-1] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=96
+2026-02-23 20:33:45.376 INFO  [pool-1-thread-4] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:33:45.384 INFO  [pool-1-thread-4] Proxy.TicketProxy - [05fdecf8] LB -> GET http://127.0.0.1:1916/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:33:45.384 INFO  [pool-1-thread-3] Handler.TicketHandler - Incoming request GET /tickets
+2026-02-23 20:33:45.384 INFO  [pool-1-thread-3] Proxy.TicketProxy - [8f7caf2f] LB -> GET http://127.0.0.1:1914/tickets connectTimeout=500ms readTimeout=4000ms
+2026-02-23 20:33:45.470 INFO  [pool-1-thread-3] Proxy.TicketProxy - [8f7caf2f] LB -> GET done http=200 timeMs=86 respSize=3743
+2026-02-23 20:33:45.475 INFO  [pool-1-thread-3] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=91
+2026-02-23 20:33:45.476 INFO  [pool-1-thread-4] Proxy.TicketProxy - [05fdecf8] LB -> GET done http=200 timeMs=92 respSize=3743
+2026-02-23 20:33:45.477 INFO  [pool-1-thread-4] Handler.TicketHandler - Completed GET /tickets status=200 timeMs=101

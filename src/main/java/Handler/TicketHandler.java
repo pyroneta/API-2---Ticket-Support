@@ -15,13 +15,8 @@ public class TicketHandler implements HttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(TicketHandler.class);
 
-    private final TicketService ticketService;
-    private final Gson gson;
-
-    public TicketHandler() {
-        this.ticketService = new TicketService();
-        this.gson = new Gson();
-    }
+    private final TicketService ticketService = new TicketService();
+    private final Gson gson = new Gson();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -35,47 +30,53 @@ public class TicketHandler implements HttpHandler {
         try {
             log.info("Incoming request {} {}", method, path);
 
-            switch (method) {
-                case "GET":
-                    manejarGet(exchange);
-                    status = 200;
-                    break;
-
-                case "POST":
-                    manejarPost(exchange);
-                    status = 201;
-                    break;
-
-                default:
-                    status = 405;
-                    responder(exchange, status, "{\"error\":\"Método no permitido\"}");
+            if ("GET".equalsIgnoreCase(method)) {
+                String listaJson = ticketService.listarTickets(); // ya JSON desde proxy
+                responder(exchange, 200, listaJson);
+                status = 200;
+                return;
             }
 
+            if ("POST".equalsIgnoreCase(method)) {
+                String body = leerBody(exchange);
+
+                Ticket ticket = gson.fromJson(body, Ticket.class);
+                Ticket creado = ticketService.crearTicket(ticket);
+
+                // ✅ Postman solo ve 201 si se guardó
+                responder(exchange, 201, gson.toJson(creado));
+                status = 201;
+                return;
+            }
+            responder(exchange, 405, "{\"error\":\"Método no permitido\"}");
+            status = 405;
+
         } catch (Exception e) {
-            log.error("Request failed {} {} - {}", method, path, e.toString(), e);
+
+            String msg = e.getMessage() != null ? e.getMessage() : "";
+
+            if (msg.contains("BAD_GATEWAY_CONNECT_TIMEOUT")) {
+                status = 502;
+                responder(exchange, status, "{\"error\":\"502 - Bad Gateway\"}");
+                log.error("Request failed {} {} - {}", method, path, e.toString(), e);
+                return;
+            }
+
+            if (msg.contains("GATEWAY_TIMEOUT_READ_TIMEOUT")) {
+                status = 504;
+                responder(exchange, status, "{\"error\":\"504 - Gateway Timeout\"}");
+                log.error("Request failed {} {} - {}", method, path, e.toString(), e);
+                return;
+            }
+
             status = 500;
             responder(exchange, status, "{\"error\":\"Error interno\"}");
+            log.error("Request failed {} {} - {}", method, path, e.toString(), e);
+
         } finally {
             long ms = System.currentTimeMillis() - start;
             log.info("Completed {} {} status={} timeMs={}", method, path, status, ms);
         }
-    }
-
-    private void manejarGet(HttpExchange exchange) throws Exception {
-        String lista = ticketService.listarTickets(); // ya es JSON
-        responder(exchange, 200, lista);
-    }
-
-    private void manejarPost(HttpExchange exchange) throws Exception {
-        String body = leerBody(exchange);
-
-        // OJO: no loguees el body completo si puede tener datos sensibles
-        log.debug("POST /tickets bodySize={}", body != null ? body.length() : 0);
-
-        Ticket ticket = gson.fromJson(body, Ticket.class);
-        Ticket creado = ticketService.crearTicket(ticket);
-
-        responder(exchange, 201, gson.toJson(creado));
     }
 
     private String leerBody(HttpExchange exchange) throws IOException {
@@ -91,10 +92,8 @@ public class TicketHandler implements HttpHandler {
 
     private void responder(HttpExchange exchange, int status, String body) throws IOException {
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
-
         byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(status, bytes.length);
-
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(bytes);
         }

@@ -19,11 +19,9 @@ public class TicketService {
 
     public Ticket crearTicket(Ticket ticket) throws Exception {
 
-        if (!usuarioClient.existeUsuario(ticket.getUsuarioId())) {
-            throw new Exception("Usuario no existe");
-        }
 
-        return ticketProxy.enviarTicket(ticket); // ✅ devuelves el real (con id)
+
+        return ticketProxy.enviarTicket(ticket);
     }
 
 

@@ -27,3 +27,16 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Maven
+target/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Logs
+logs/
+
+# OS
+.DS_Store
