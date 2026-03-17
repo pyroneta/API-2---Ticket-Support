@@ -1,13 +1,13 @@
 package Server;
 
-import Handler.RegistrarHandler;
-import Handler.RootHandler;
-import Handler.UpstreamHealthHandler;
-import com.sun.net.httpserver.Headers;
+import Proxy.ApiForwardHandler;
 import com.sun.net.httpserver.HttpServer;
-import Handler.TicketHandler;
 
+import java.io.InputStream;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 
 public class TicketServer {
@@ -15,56 +15,57 @@ public class TicketServer {
     private HttpServer server;
 
     public boolean start() {
-
         try {
+            Properties props = new Properties();
 
-            server = HttpServer.create(new InetSocketAddress("127.0.0.1", 1916), 0);
+            try (InputStream is = TicketServer.class.getClassLoader().getResourceAsStream("proxy.properties")) {
+                if (is == null) throw new RuntimeException("No se encontró proxy.properties en src/main/resources");
+                props.load(is);
+            }
+
+            String host = props.getProperty("proxy.host", "127.0.0.1").trim();
+            int port = Integer.parseInt(props.getProperty("proxy.port", "1916").trim());
+
+            String backendBaseUrl = props.getProperty("backend.baseUrl").trim();
+            String routesStr = props.getProperty("backend.routes").trim();
+
+            List<String> routes = Arrays.stream(routesStr.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList(); // ✅ Java 21 ok
+
+            server = HttpServer.create(new InetSocketAddress(host, port), 0);
+
+            // ✅ Un solo handler para todas las rutas
+            ApiForwardHandler forward = new ApiForwardHandler(backendBaseUrl);
+
+            // ✅ FOR que crea contexts según properties (lo que tu profe quiere ver)
+            for (String route : routes) {
+                server.createContext(route, forward);
+            }
 
             // Root opcional
-            server.createContext("/", new RootHandler());
-
-            // Registrar backends
-            server.createContext("/registrar", new RegistrarHandler());
-
-            // Tickets
-            server.createContext("/tickets", exchange -> {
-
-                Headers headers = exchange.getResponseHeaders();
-
-                headers.add("Access-Control-Allow-Origin", "*");
-                headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-                headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-                if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-                    exchange.sendResponseHeaders(200, -1);
-                    return;
-                }
-
-                new TicketHandler().handle(exchange);
+            server.createContext("/", exchange -> {
+                byte[] msg = ("API2 Proxy OK -> " + backendBaseUrl).getBytes();
+                exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
+                exchange.sendResponseHeaders(200, msg.length);
+                exchange.getResponseBody().write(msg);
+                exchange.close();
             });
 
-            server.createContext("/health", new UpstreamHealthHandler());
-
-            server.setExecutor(Executors.newFixedThreadPool(4));
+            server.setExecutor(Executors.newFixedThreadPool(8));
             server.start();
 
-            System.out.println("✅ API2 corriendo en puerto 1916");
+            System.out.println("✅ API2 Proxy corriendo en http://" + host + ":" + port);
+            System.out.println("➡️ Forward a: " + backendBaseUrl);
+            System.out.println("➡️ Rutas: " + routes);
+
             return true;
 
         } catch (Exception e) {
-            System.err.println("❌ Error al iniciar API2");
+            System.err.println("❌ Error al iniciar API2 Proxy");
             e.printStackTrace();
             return false;
-        }
-    }
-
-
-    public void stop() {
-
-        if (server != null) {
-            server.stop(0);
-            server = null;
-            System.out.println("🛑 Ticket API detenida");
         }
     }
 }
