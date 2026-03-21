@@ -1,5 +1,6 @@
-package Proxy;
+package Handler;
 
+import Service.RoundRobin;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -11,36 +12,62 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 public class ApiForwardHandler implements HttpHandler {
-
-    private final String backendBaseUrl; // ej: http://127.0.0.1:1914
-
-    public ApiForwardHandler(String backendBaseUrl) {
-        this.backendBaseUrl = backendBaseUrl.endsWith("/")
-                ? backendBaseUrl.substring(0, backendBaseUrl.length() - 1)
-                : backendBaseUrl;
-    }
 
     @Override
     public void handle(HttpExchange exchange) {
         try {
-            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-            exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-            exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            System.out.println("\n================ PROXY REQUEST ================");
+            System.out.println("Metodo: " + exchange.getRequestMethod());
+            System.out.println("URI: " + exchange.getRequestURI());
+            System.out.println("Remote: " + exchange.getRemoteAddress());
+
+            String origin = exchange.getRequestHeaders().getFirst("Origin");
+            if (origin == null || origin.isEmpty()) {
+                origin = "http://localhost:5173";
+            }
+
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", origin);
+            exchange.getResponseHeaders().set("Vary", "Origin");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Credentials", "true");
 
             if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                System.out.println("Request OPTIONS detectado, respondiendo 204");
                 exchange.sendResponseHeaders(204, -1);
+                exchange.close();
+                return;
+            }
+
+            String backend = RoundRobin.next();
+            System.out.println("Backend seleccionado: " + backend);
+
+            if (backend == null) {
+                byte[] msg = "No hay backends registrados".getBytes(StandardCharsets.UTF_8);
+                exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
+                exchange.sendResponseHeaders(503, msg.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(msg);
+                }
                 return;
             }
 
             URI reqUri = exchange.getRequestURI();
             String path = reqUri.getPath();
             String query = reqUri.getQuery();
-
             String fullPath = (query == null || query.isEmpty()) ? path : path + "?" + query;
 
-            URL url = new URL(backendBaseUrl + fullPath);
+
+            String targetUrl = backend.endsWith("/")
+                    ? backend.substring(0, backend.length() - 1) + fullPath
+                    : backend + fullPath;
+            System.out.println("Forward URL: " + targetUrl);
+
+            URL url = new URL(targetUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod(exchange.getRequestMethod());
@@ -48,6 +75,11 @@ public class ApiForwardHandler implements HttpHandler {
             conn.setReadTimeout(8000);
 
             Headers reqHeaders = exchange.getRequestHeaders();
+            System.out.println("Headers entrantes:");
+            for (Map.Entry<String, List<String>> entry : reqHeaders.entrySet()) {
+                System.out.println("  " + entry.getKey() + ": " + entry.getValue());
+            }
+
             for (String key : reqHeaders.keySet()) {
                 if (key == null) continue;
                 if (key.equalsIgnoreCase("Host")) continue;
@@ -64,19 +96,32 @@ public class ApiForwardHandler implements HttpHandler {
                     || method.equalsIgnoreCase("PATCH");
 
             if (mayHaveBody) {
+                byte[] requestBody = readBytes(exchange.getRequestBody());
+
+                System.out.println("Body recibido en proxy:");
+                System.out.println(new String(requestBody, StandardCharsets.UTF_8));
+
                 conn.setDoOutput(true);
-                try (InputStream in = exchange.getRequestBody();
-                     OutputStream out = conn.getOutputStream()) {
-                    copy(in, out);
+                try (OutputStream out = conn.getOutputStream()) {
+                    out.write(requestBody);
                     out.flush();
                 }
+
+                System.out.println("Body reenviado al backend correctamente");
             }
 
             int status = conn.getResponseCode();
+            System.out.println("Status backend: " + status);
+
+            System.out.println("Headers respuesta backend:");
+            conn.getHeaderFields().forEach((k, vals) -> {
+                System.out.println("  " + k + ": " + vals);
+            });
 
             conn.getHeaderFields().forEach((k, vals) -> {
                 if (k == null) return;
                 if (k.equalsIgnoreCase("Transfer-Encoding")) return;
+                if (k.toLowerCase().startsWith("access-control")) return;
                 for (String v : vals) {
                     exchange.getResponseHeaders().add(k, v);
                 }
@@ -85,12 +130,21 @@ public class ApiForwardHandler implements HttpHandler {
             InputStream backendStream = (status >= 400) ? conn.getErrorStream() : conn.getInputStream();
             byte[] respBytes = (backendStream == null) ? new byte[0] : readBytes(backendStream);
 
+            System.out.println("Body respuesta backend:");
+            System.out.println(new String(respBytes, StandardCharsets.UTF_8));
+
             exchange.sendResponseHeaders(status, respBytes.length);
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(respBytes);
             }
 
+            System.out.println("Respuesta enviada al frontend");
+            System.out.println("============== FIN PROXY REQUEST ==============\n");
+
         } catch (Exception e) {
+            System.out.println("ERROR EN PROXY:");
+            e.printStackTrace();
+
             try {
                 byte[] msg = ("Proxy error: " + e.getMessage()).getBytes(StandardCharsets.UTF_8);
                 exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
@@ -105,14 +159,6 @@ public class ApiForwardHandler implements HttpHandler {
                 exchange.close();
             } catch (Exception ignored) {
             }
-        }
-    }
-
-    private void copy(InputStream in, OutputStream out) throws java.io.IOException {
-        byte[] buffer = new byte[4096];
-        int n;
-        while ((n = in.read(buffer)) != -1) {
-            out.write(buffer, 0, n);
         }
     }
 

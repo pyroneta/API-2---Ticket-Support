@@ -1,6 +1,5 @@
 package Service;
 
-import Client.TicketClient;
 import Client.UsuarioClient;
 import Model.Ticket;
 import Proxy.TicketProxy;
